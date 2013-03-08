@@ -46,7 +46,7 @@ function TinyLoader() {
   }
 
   function add(element) {
-    target.parentNode.insertBefore(element, target);
+    target.appendChild(element);
   }
 
   // public
