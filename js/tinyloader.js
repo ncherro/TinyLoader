@@ -1,3 +1,6 @@
+/*! TinyLoader v0.1.1 | (c) 2013 Nick Herro | This content is released under the MIT License.
+*/
+
 function TinyLoader() {
   // make sure there is only one instance
   if (arguments.callee._tinyLoaderInstance)
