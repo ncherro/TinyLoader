@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>Tiny Loader Example</title>
+</head>
+<body>
+
+<h1>Oh hey</h1>
+<script type="text/javascript" charset="utf-8" src="js/loader.js"></script>
+<script>
+  function hey(str) {
+    var h2 = $('<h2>' + str + '</h2>');
+    $('body').append(h2);
+    return h2;
+  }
+
+  var loader = new TinyLoader();
+
+  // NOTE: IE requires protocols (http:// or https://) to be set. this
+  // will be fixed soon
+
+  // these scripts must load syncronously b/c jQuery UI depends on jQuery
+  // so nest the jQuery UI loader in the jQuery callback like this
+  loader.addScript({
+    url: "https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js",
+    callback: function() {
+      hey('jQuery is loaded!');
+      loader.addScript({
+        url: "https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.1/jquery-ui.min.js",
+        callback: function() {
+          hey('jQuery UI is loaded! (drag me)').draggable();
+        }
+      });
+    }
+  });
+
+  // these scripts can load asynchronously.  underscore doesn't require jQuery
+  // to be loaded, but our callback does.  adding jQuery as a dep ensures it is
+  // loaded before our callback is run
+  loader.addScript({
+    url: "http://underscorejs.org/underscore-min.js",
+    deps: ["https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"],
+    callback: function() { hey('Underscore is loaded'); }
+  });
+</script>
+</body>
+</html>
